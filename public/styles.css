@@ -1,0 +1,327 @@
+/* ============================================================
+   屏幕界面样式
+   ============================================================ */
+:root {
+  --bg: #f4f2ec;
+  --panel: #ffffff;
+  --ink: #1f2328;
+  --ink-soft: #5b6470;
+  --line: #e2ded4;
+  --accent: #8c5a2b;
+  --accent-soft: #f3e9dc;
+  --danger: #b3261e;
+  --danger-soft: #fdecea;
+  --ok: #237a4b;
+  --stage: #d8d4c8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB",
+    "Noto Sans CJK SC", sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  height: 100vh;
+}
+
+.panel-controls {
+  background: var(--panel);
+  border-right: 1px solid var(--line);
+  padding: 22px 22px 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hint {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--ink);
+  background: #fdfcf9;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btn:hover {
+  background: #f7f4ee;
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #764b22;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status {
+  font-size: 12.5px;
+  border-radius: 8px;
+  padding: 10px 12px;
+  line-height: 1.6;
+  display: none;
+}
+
+.status.show {
+  display: block;
+}
+
+.status.ok {
+  background: #edf7f0;
+  color: var(--ok);
+  border: 1px solid #cde8d8;
+}
+
+.status.err {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid #f3cfcb;
+}
+
+.status code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.foot {
+  margin-top: auto;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.foot summary {
+  cursor: pointer;
+  user-select: none;
+}
+
+.foot ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+/* ============================================================
+   预览舞台
+   ============================================================ */
+.panel-preview {
+  overflow: auto;
+  background: var(--stage);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.stage {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.stage-box {
+  transform-origin: center center;
+  flex: none;
+}
+
+.stage-error {
+  background: var(--danger-soft);
+  border: 2px dashed var(--danger);
+  color: var(--danger);
+  border-radius: 12px;
+  padding: 22px 26px;
+  max-width: 460px;
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.stage-error strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   展签本体（屏幕预览与打印共用同一结构/字号/行距）
+   ============================================================ */
+.label {
+  background: #fffdf7;
+  color: #111;
+  overflow: hidden;
+  /* 物理尺寸通过内联 style 以 mm 设置 */
+  padding: calc(var(--pad) * 1mm);
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-box .label {
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.label-title {
+  margin: 0 0 calc(var(--title-gap) * 1px);
+}
+
+.label-title .line {
+  font-weight: 700;
+  font-size: calc(var(--title-size) * 1px);
+  line-height: var(--title-lh);
+  white-space: nowrap;
+}
+
+.label-body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--para-gap) * 1px);
+}
+
+.label-body .para {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.label-body .line {
+  font-size: calc(var(--body-size) * 1px);
+  line-height: var(--body-lh);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   打印：严格物理尺寸，页面无边距
+   ============================================================ */
+#print-root {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 0;
+    /* size 由 JS 在打印前按展签 mm 动态写入（#print-page-style） */
+  }
+
+  html,
+  body {
+    background: #fff;
+    width: auto;
+    height: auto;
+  }
+
+  #app {
+    display: none !important;
+  }
+
+  #print-root {
+    display: block !important;
+  }
+
+  #print-root .label {
+    box-shadow: none;
+    page-break-after: avoid;
+    break-inside: avoid;
+  }
+}

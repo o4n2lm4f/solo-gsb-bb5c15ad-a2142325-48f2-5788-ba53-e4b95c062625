@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>博物馆展签排版工具</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <aside class="panel panel-controls">
+      <header class="brand">
+        <h1>展签排版</h1>
+        <p class="subtitle">按真实字宽规划断行 · 自动选最大字号 · 毫米级打印</p>
+      </header>
+
+      <form id="form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">标题</span>
+          <input type="text" id="title" maxlength="120"
+                 placeholder="例如：后母戊鼎（复制品）" />
+        </label>
+
+        <label class="field">
+          <span class="field-label">
+            说明正文
+            <em class="hint">中英混排；空行分段；英文单词不会被拆开</em>
+          </span>
+          <textarea id="body" rows="10"
+                    placeholder="输入展签说明，可中文夹 English…"></textarea>
+        </label>
+
+        <div class="field-row">
+          <label class="field">
+            <span class="field-label">宽度 (mm)</span>
+            <input type="number" id="widthMm" min="20" max="1000" step="1" value="100" required />
+          </label>
+          <label class="field">
+            <span class="field-label">高度 (mm)</span>
+            <input type="number" id="heightMm" min="20" max="1000" step="1" value="80" required />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="btn-print" class="btn btn-primary">打印 / 导出 PDF</button>
+          <button type="button" id="btn-sample" class="btn">载入示例</button>
+        </div>
+      </form>
+
+      <section id="status" class="status" aria-live="polite"></section>
+
+      <footer class="foot">
+        <details>
+          <summary>排版规则说明</summary>
+          <ul>
+            <li>断行依据浏览器实际渲染字宽（Canvas 测量），英文单词整体不可拆。</li>
+            <li>闭标点（）》、。，；：！？”’等）不出现于行首，开标点（（《「“‘等）不出现于行尾。</li>
+            <li>在所有合法排法中，最小化<strong>非末行剩余空白宽度的平方和</strong>，末行不参与惩罚。</li>
+            <li>正文字号在 12–24&nbsp;px 之间选取可同时容纳于宽高的<strong>最大整数</strong>；装不下时直接报错，绝不截断文字。</li>
+            <li>打印纸幅自动设为展签物理尺寸，预览的每一行与打印完全一致。</li>
+          </ul>
+        </details>
+      </footer>
+    </aside>
+
+    <main class="panel panel-preview">
+      <div id="stage" class="stage">
+        <div id="stage-box" class="stage-box">
+          <!-- 预览展签（等比缩放） -->
+        </div>
+        <div id="stage-error" class="stage-error" hidden></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- 打印专用展签：屏幕隐藏，打印时按物理毫米尺寸输出 -->
+  <div id="print-root" aria-hidden="true"></div>
+
+  <script src="/layout.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
