@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>博物馆展签排版工具</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="panel">
+    <h1 class="brand">展签排版 <span>Label Typesetter</span></h1>
+
+    <label class="field">
+      <span class="field-label">标题</span>
+      <input id="title" type="text" value="白陶刻纹尊" placeholder="如：白陶刻纹尊">
+    </label>
+
+    <label class="field">
+      <span class="field-label">说明文字（中文可夹 English）</span>
+      <textarea id="body" rows="12" placeholder="输入展签正文，回车可分段。英文单词不会被拆开。"></textarea>
+    </label>
+
+    <div class="field-row">
+      <label class="field">
+        <span class="field-label">标签宽 (mm)</span>
+        <input id="widthMm" type="number" min="30" max="999" step="1" value="120">
+      </label>
+      <label class="field">
+        <span class="field-label">标签高 (mm)</span>
+        <input id="heightMm" type="number" min="20" max="999" step="1" value="80">
+      </label>
+    </div>
+
+    <div class="actions">
+      <button id="printBtn" type="button">打印 / 导出 PDF</button>
+    </div>
+
+    <div id="status" class="status" aria-live="polite"></div>
+
+    <details class="help">
+      <summary>排版规则说明</summary>
+      <ul>
+        <li>按字体<strong>实际字宽</strong>逐字/逐词测量后规划断行。</li>
+        <li>英文单词整体移动，不会从中间断开。</li>
+        <li>闭标点（。，、！？：；）”’】》…—等）不会出现在行首；开标点（“‘【《〈等）不会留在行尾。</li>
+        <li>在所有放得下的排法中，最小化<strong>非末行空白宽度的平方和</strong>，使各行尽量均匀填满。</li>
+        <li>正文字号在 <strong>12–24px</strong> 中取能同时容纳宽与高的<strong>最大整数</strong>；任何字号都放不下时报错，不做截断或缩放。</li>
+        <li>标题字号为正文的 1.4 倍并加粗，宽度不足时按相同规则折行。</li>
+        <li>打印输出与预览<strong>同换行、同物理尺寸</strong>（毫米）。</li>
+      </ul>
+    </details>
+  </aside>
+
+  <main class="stage-wrap">
+    <div id="stage" class="stage">
+      <div id="label" class="label">
+        <div id="labelTitle" class="label-title"></div>
+        <div id="labelBody" class="label-body"></div>
+        <div id="labelError" class="label-error" hidden></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="/js/layout.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
